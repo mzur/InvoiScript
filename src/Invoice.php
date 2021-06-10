@@ -357,24 +357,43 @@ class Invoice extends Fpdi
    protected function getLayout($override = [])
    {
       return array_merge([
+         // Y coordinate to start the address text.
          'addressMarginTop' => 52.5,
+         // X coordinate to start the address text.
          'addressPaddingLeft' => 30,
+         // Height of a regular text line.
          'contentCellHeight' => 5,
+         // Y coordinate to start the content of the first page.
          'contentMarginTopP1' => 105,
+         // Y coordinate to start the content of the pages following the first.
          'contentMarginTopPX' => 45,
+         // Text alignment of the invoice entries columns.
          'entriesColumnAlignment' => ['R', 'L', 'R', 'R'],
+         // Width of the invoice entries columns.
          'entriesColumnWidths' => [25, 105, 20, 25],
+         // Space after the entry table.
          'entriesPaddingBottom' => 15,
+         // Space before the entry table.
          'entriesPaddingTop' => 10,
+         // Font to use for all text.
          'font' => 'arial',
+         // Font size of regular text.
          'fontSize' => 12,
+         // Y coordinate to initiate a pagebreak.
          'pageMaxY' => 260,
+         // X coordinate of the page number text.
          'pageNoX' => 15,
+         // Y coordinate of the page number text.
          'pageNoY' => 277,
+         // Left and right padding of the page.
          'pagePaddingLeft' => 15,
+         // Top and bottom padding of the page.
          'pagePaddingTop' => 12.5,
+         // Height of a title text line.
          'titleCellHeight' => 6,
+         // Font size of title text.
          'titleFontSize' => 15,
+         // Y coordinate to start the invoice title on the first page.
          'titleMarginTop' => 85,
       ], $override);
    }
