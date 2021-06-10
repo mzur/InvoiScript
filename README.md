@@ -49,7 +49,7 @@ $content = [
 ];
 
 $pdf = new Invoice($content);
-$pdf->generate(__DIR__."/invoices/pdfs/RE{$argv[1]}.pdf");
+$pdf->generate('invoice.pdf');
 ```
 
 This generates the following PDF:
