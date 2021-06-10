@@ -1,9 +1,6 @@
 <?php
 
-require_once(__DIR__.'/vendor/fpdf-1.83/fpdf.php');
-require_once(__DIR__.'/vendor/FPDI-2.3.6/src/autoload.php');
-
-use setasign\Fpdi\Fpdi;
+use Setasign\Fpdi\Fpdi;
 
 class Invoice extends Fpdi
 {

@@ -1,0 +1,21 @@
+{
+    "name": "mzur/invoiscript",
+    "description": "Generate simple PDF invoices",
+    "type": "library",
+    "require": {
+        "setasign/fpdf": "^1.8",
+        "setasign/fpdi": "^2.3"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Martin Zurowietz",
+            "email": "martin@zurowietz.de"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Mzur\\InvoiScript\\": "src/"
+        }
+    },
+}
