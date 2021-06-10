@@ -2,17 +2,21 @@
 
 return [
    'en' => [
-      'quantity' => 'Quantity',
+      'decimalSeparator' => '.',
       'item' => 'Item',
-      'price' => 'Price',
-      'total' => 'Total',
       'page' => 'Page {page} of {pages}',
+      'price' => 'Price',
+      'quantity' => 'Quantity',
+      'thousandsSeparator' => ',',
+      'total' => 'Total',
    ],
    'de' => [
-      'quantity' => 'Menge',
+      'decimalSeparator' => ',',
       'item' => 'Artikel',
-      'price' => 'Preis',
-      'total' => 'Summe',
       'page' => 'Seite {page} von {pages}',
+      'price' => 'Preis',
+      'quantity' => 'Menge',
+      'thousandsSeparator' => '.',
+      'total' => 'Summe',
    ],
 ];

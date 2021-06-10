@@ -226,13 +226,13 @@ class Invoice extends Fpdi
             $nextY = $this->getY();
          }
          $currentY = $nextY;
-         $this->cell($widths[0], $this->layout['contentCellHeight'], number_format($entry['quantity'], 2), '', 0, $alignment[0]);
+         $this->cell($widths[0], $this->layout['contentCellHeight'], $this->numberFormat($entry['quantity']), '', 0, $alignment[0]);
          $this->multiCell($widths[1], $this->layout['contentCellHeight'], utf8_decode($entry['description']), 0, $alignment[1]);
          $nextY = max($nextY, $this->getY());
          $this->setXY($this->layout['pagePaddingLeft'] + $widths[0] + $widths[1], $currentY);
-         $this->cell($widths[2], $this->layout['contentCellHeight'], number_format($entry['price'], 2), '', 0, $alignment[2]);
+         $this->cell($widths[2], $this->layout['contentCellHeight'], $this->numberFormat($entry['price']), '', 0, $alignment[2]);
          $total = $entry['quantity'] * $entry['price'];
-         $this->cell($widths[3], $this->layout['contentCellHeight'], number_format($total, 2), '', 1, $alignment[3]);
+         $this->cell($widths[3], $this->layout['contentCellHeight'], $this->numberFormat($total), '', 1, $alignment[3]);
       }
 
       $this->setY($nextY);
@@ -389,8 +389,20 @@ class Invoice extends Fpdi
    protected function getVariables($variables = [])
    {
       return array_merge($variables, [
-         'total' => number_format($this->getTotal(), 2),
+         'total' => $this->numberFormat($this->getTotal()),
          'page' => $this->pageNo(),
       ]);
+   }
+
+   /**
+    * Format a number string.
+    *
+    * @param int|float $number
+    *
+    * @return string
+    */
+   protected function numberFormat($number)
+   {
+      return number_format($number, 2, $this->t('decimalSeparator'), $this->t('thousandsSeparator'));
    }
 }
