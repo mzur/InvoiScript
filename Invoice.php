@@ -83,7 +83,7 @@ class Invoice extends Fpdi
     * @param string $lang Language code. Default 'en'.
     * @param array $layout Variables to override the default layout.
     */
-   public function __construct($content, $template = '', $lang = 'en', $layout = [])
+   public function __construct($content, $template = '', $lang = 'en', $layout = [], $variables = [])
    {
       parent::__construct();
       $this->content = $content;
@@ -93,10 +93,7 @@ class Invoice extends Fpdi
       }
       $this->lang = $lang;
       $this->layout = $this->getLayout($layout);
-      $this->variables = [
-         'total' => number_format($this->getTotal(), 2),
-         'page' => 0,
-      ];
+      $this->variables = $this->getVariables($variables);
       $this->setFont($this->layout['font'], '', $this->layout['fontSize']);
       $this->setMargins($this->layout['pagePaddingLeft'], $this->layout['pagePaddingTop']);
       $this->setAutoPageBreak(false);
@@ -147,7 +144,7 @@ class Invoice extends Fpdi
    {
       $this->setY($this->layout['titleMarginTop']);
       $this->setFont('', 'B', $this->layout['titleFontSize']);
-      $this->cell(0, $this->layout['contentCellHeight'], $this->content['title']);
+      $this->write($this->layout['titleCellHeight'], $this->content['title']);
       $this->setFont('', '', $this->layout['fontSize']);
    }
 
@@ -347,5 +344,20 @@ class Invoice extends Fpdi
          'titleFontSize' => 15,
          'titleMarginTop' => 85,
       ], $override);
+   }
+
+   /**
+    * Get the page variables.
+    *
+    * @param array $variables User-defined variables.
+    *
+    * @return array
+    */
+   protected function getVariables($variables = [])
+   {
+      return array_merge($variables, [
+         'total' => number_format($this->getTotal(), 2),
+         'page' => 0,
+      ]);
    }
 }
