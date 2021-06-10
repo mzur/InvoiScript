@@ -1,6 +1,8 @@
 <?php
 
-use Setasign\Fpdi\Fpdi;
+namespace Mzur\InvoiScript;
+
+use setasign\Fpdi\Fpdi;
 
 class Invoice extends Fpdi
 {
