@@ -78,11 +78,8 @@ class Invoice extends Fpdi
     * Create a new instance.
     *
     * @param array $content Array containing 'title', 'cientAddress', 'entries', and optional 'beforeInfo' and 'afterInfo'.
-    * @param string $template Optional path to a PDF template to use. The last page of the template will be used for all pages of the invoice that have a higher page number. Else each template page will be used for each invoice page.
-    * @param string $lang Language code. Default 'en'.
-    * @param array $layout Variables to override the default layout.
     */
-   public function __construct($content, $template = '', $lang = 'en', $layout = [], $variables = [])
+   public function __construct($content)
    {
       parent::__construct();
       $this->content = $content;
@@ -90,18 +87,55 @@ class Invoice extends Fpdi
       if (empty($this->entries)) {
          throw new Exception("No item entries for the invoice.");
       }
-      $this->lang = $lang;
+      $this->setLayout();
+      $this->setVariables();
+      $this->setAutoPageBreak(false);
+      $this->templatePages = 0;
+      $this->aliasNbPages('{pages}');
+   }
+
+   /**
+    * Set the template to use.
+    *
+    * @param string $path Path to the PDF template. The last page of the template will be
+    * used for all pages of the invoice that have a higher page number. Else each
+    * template page will be used for each invoice page.
+    */
+   public function setTemplate($path)
+   {
+      $this->templatePages = $this->setSourceFile($path);
+   }
+
+   /**
+    * Set the language to use.
+    *
+    * @param string $code Language code.
+    */
+   public function setLanguage($code)
+   {
+      $this->lang = $code;
+   }
+
+   /**
+    * Set custom layout variables.
+    *
+    * @param array $layout
+    */
+   public function setLayout($layout = [])
+   {
       $this->layout = $this->getLayout($layout);
-      $this->variables = $this->getVariables($variables);
       $this->setFont($this->layout['font'], '', $this->layout['fontSize']);
       $this->setMargins($this->layout['pagePaddingLeft'], $this->layout['pagePaddingTop']);
-      $this->setAutoPageBreak(false);
-      if ($template !== '') {
-         $this->templatePages = $this->setSourceFile($template);
-      } else {
-         $this->templatePages = 0;
-      }
-      $this->aliasNbPages('{pages}');
+   }
+
+   /**
+    * Set custom content variables.
+    *
+    * @param array $variables
+    */
+   public function setVariables($variables = [])
+   {
+      $this->variables = $this->getVariables($variables);
    }
 
    /**
@@ -356,7 +390,7 @@ class Invoice extends Fpdi
    {
       return array_merge($variables, [
          'total' => number_format($this->getTotal(), 2),
-         'page' => 0,
+         'page' => $this->pageNo(),
       ]);
    }
 }
