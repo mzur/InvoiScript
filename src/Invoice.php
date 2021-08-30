@@ -164,7 +164,7 @@ class Invoice extends Fpdi
       $this->setY($this->layout['addressMarginTop']);
 
       foreach ($address as $line) {
-         $this->cell(0, $this->layout['contentCellHeight'], $line, 0, 1);
+         $this->cell(0, $this->layout['contentCellHeight'], utf8_decode($line), 0, 1);
       }
 
       $this->setMargins($this->layout['pagePaddingLeft'], $this->layout['pagePaddingTop']);
