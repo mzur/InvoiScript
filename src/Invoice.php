@@ -164,7 +164,7 @@ class Invoice extends Fpdi
       $this->setY($this->layout['addressMarginTop']);
 
       foreach ($address as $line) {
-         $this->cell(0, $this->layout['contentCellHeight'], utf8_decode($line), 0, 1);
+         $this->cell(0, $this->layout['contentCellHeight'], mb_convert_encoding($line, 'ISO-8859-1', 'UTF-8'), 0, 1);
       }
 
       $this->setMargins($this->layout['pagePaddingLeft'], $this->layout['pagePaddingTop']);
@@ -208,7 +208,7 @@ class Invoice extends Fpdi
          ];
          $this->setFont('', 'b');
          foreach ($widths as $index => $width) {
-            $this->cell($width, $this->layout['titleCellHeight'], utf8_decode($header[$index]), 'BT', 0, $alignment[$index]);
+            $this->cell($width, $this->layout['titleCellHeight'], mb_convert_encoding($header[$index],'ISO-8859-1', 'UTF-8'), 'BT', 0, $alignment[$index]);
          }
          $this->setFont('', '');
          $this->ln();
@@ -227,7 +227,7 @@ class Invoice extends Fpdi
          }
          $currentY = $nextY;
          $this->cell($widths[0], $this->layout['contentCellHeight'], $this->numberFormat($entry['quantity']), '', 0, $alignment[0]);
-         $this->multiCell($widths[1], $this->layout['contentCellHeight'], utf8_decode($entry['description']), 0, $alignment[1]);
+         $this->multiCell($widths[1], $this->layout['contentCellHeight'], mb_convert_encoding($entry['description'], 'ISO-8859-1', 'UTF-8'), 0, $alignment[1]);
          $nextY = max($nextY, $this->getY());
          $this->setXY($this->layout['pagePaddingLeft'] + $widths[0] + $widths[1], $currentY);
          $this->cell($widths[2], $this->layout['contentCellHeight'], $this->numberFormat($entry['price']), '', 0, $alignment[2]);
@@ -288,7 +288,7 @@ class Invoice extends Fpdi
             foreach ($this->variables as $key => $value) {
                $segment = preg_replace("/\{{$key}\}/", $value, $segment);
             }
-            parent::write($h, utf8_decode($segment), $link);
+            parent::write($h, mb_convert_encoding($segment, 'ISO-8859-1', 'UTF-8'), $link);
          }
       }
    }
